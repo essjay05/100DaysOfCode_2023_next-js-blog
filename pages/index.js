@@ -1,17 +1,12 @@
 import Head from 'next/head'
 import Layout, { siteTitle } from '../components/layout'
 import utilStyles from '../styles/utils.module.css'
-// import { getSortedPostsData } from '../lib/posts'
-// import { getProjectsData } from '../lib/projects'
+import { getSortedPostsData } from '../lib/posts'
+import { getProjectsData } from '../lib/projects'
 
-export default function Home({ projects }) {
-
-  console.log('Index.js allProjectsData:')
-  console.log(projects)
+export default function Home({ projects, posts }) {
 
   const projectsData = projects.data
-
-  // const projectsData = allProjectsData.data
   
   return (
     <Layout home>
@@ -23,7 +18,7 @@ export default function Home({ projects }) {
       </section>
       {/* Projects */}
       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
-        <h2 className={utilStyles.headingLg}>Blog</h2>
+        <h2 className={utilStyles.headingLg}>Projects</h2>
         <ul className={utilStyles.list}>
           {projectsData.map((project) => {
             const { id, attributes } = {...project}
@@ -37,11 +32,12 @@ export default function Home({ projects }) {
           })}
         </ul>
       </section>
+      <hr/>
       {/* Blog */}
-      {/* <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
+      <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
         <h2 className={utilStyles.headingLg}>Blog</h2>
         <ul className={utilStyles.list}>
-          {allPostsData.map(({ id, date, title }) => (
+          {posts.map(({ id, date, title }) => (
             <li className={utilStyles.listItem} key={id}>
               {title}
               <br />
@@ -51,21 +47,19 @@ export default function Home({ projects }) {
             </li>
           ))}
         </ul>
-      </section> */}
+      </section>
     </Layout>
   )
 }
 
 export async function getStaticProps() {
-  // const allPostsData = getSortedPostsData()
-  const url = `https://find-your-joy-app.onrender.com/api/projects`
-  const allProjectsData = await fetch(url)
-  // const projectsJson = await allProjectsData.json()
-  console.log('allProjectsData')
-  console.log(allProjectsData)
+  const allPostsData = await getSortedPostsData()
+  const libProjectsData = await getProjectsData()
+  
   return {
     props: {
-      projects: await allProjectsData.json()
+      posts: allPostsData,
+      projects: libProjectsData
     }
   }
 }
