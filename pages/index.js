@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import Layout, { siteTitle } from '../components/layout'
+import Link from 'next/link'
 import utilStyles from '../styles/utils.module.css'
 import { getSortedPostsData } from '../lib/posts'
 import { getProjectsData } from '../lib/projects'
@@ -25,7 +26,9 @@ export default function Home({ projects, posts }) {
             const { name, description } = {...attributes}
             return (
               <li className={utilStyles.listItem} key={id}>
-                <h3>{name}</h3>
+                <Link href={`/projects/${id}`}>
+                  <h3>{name}</h3>
+                </Link>
                 <p>{description}</p>
               </li>
             )
@@ -39,7 +42,7 @@ export default function Home({ projects, posts }) {
         <ul className={utilStyles.list}>
           {posts.map(({ id, date, title }) => (
             <li className={utilStyles.listItem} key={id}>
-              {title}
+              <Link href={`/posts/${id}`}>{title}</Link>
               <br />
               {id}
               <br />
