@@ -13,8 +13,6 @@ export async function getStaticProps({ params }) {
 
 export async function getStaticPaths() {
   const paths = await getAllProjectIds()
-  console.log('getStaticPaths for projects')
-  console.log(paths)
   return {
     paths,
     fallback: false,
