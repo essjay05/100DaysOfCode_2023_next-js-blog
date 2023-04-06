@@ -1,4 +1,5 @@
 import Layout from '../../components/layout'
+import Head from 'next/head'
 import utilStyles from '../../styles/utils.module.css'
 import { getAllProjectIds, getSingleProjectData } from '../../lib/projects'
 
@@ -26,6 +27,9 @@ export default function Project({ projectData }) {
 
   return (
     <Layout>
+      <Head>
+        <title>{ name }</title>
+      </Head>
       <h2 className={utilStyles.headingLg}>Project: { name }</h2>
       <p>{ description }</p>
       <ul>
